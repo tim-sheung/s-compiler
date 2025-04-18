@@ -1,6 +1,6 @@
 A simple s-expression compiler written in Rust
 
-[Try it here](https://github.com/tim-sheung/s-compiler)
+[Try it here](https://tim-sheung.github.io/s-compiler/)
 
 ### Syntax
 ```
