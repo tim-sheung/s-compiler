@@ -1,0 +1,14 @@
+{
+  "name": "s",
+  "version": "0.1.0",
+  "files": [
+    "s_bg.wasm",
+    "s.js",
+    "s.d.ts"
+  ],
+  "module": "s.js",
+  "types": "s.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
