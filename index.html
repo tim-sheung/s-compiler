@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>s-compiler</title>
+</head>
+<style>
+    body {
+        background-color: #222831;
+        color: #EEEEEE;
+        font-family: sans-serif;
+        padding: 8px;
+    }
+
+    #left {
+        float: left;
+        width: 45%;
+    }
+
+    #right {
+        float: right;
+        width: 45%;
+    }
+
+    #code-area {
+        width: 100%;
+        height: 100%;
+        background-color: #31363F;
+        color: #EEEEEE;
+        font-family: monospace;
+        border: none;
+        padding: 8px;
+        border-radius: 8px;
+    }
+
+    #code-area:focus {
+        outline: none;
+    }
+
+    #compile {
+        background-color: #76ABAE;
+        color: #222831;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    #compile:hover {
+        background-color: #4E7B7F;
+    }
+
+    pre {
+        background-color: #31363F;
+        color: #EEEEEE;
+        font-family: monospace;
+        padding: 8px;
+        border-radius: 8px;
+    }
+</style>
+
+<body>
+<div id="left"><textarea id="code-area" rows="20" placeholder="Write your code here...">
+</textarea>
+    <p>
+        <button id="compile">Compile</button>
+    </p>
+    <p>Result: <span id="result"></span></p>
+</div>
+
+<div id="right">
+    <div>
+        Operators
+    </div>
+    <pre>
+Arithmetic:
+    +, -, *, /
+
+Comparison:
+    lt, gt, eq, ne, and, or, not
+
+Condition:
+    (if (condition) (true branch) (false branch))
+    (? (condition) (true branch) (false branch))
+
+Loop:
+    (loop (condition) (body))
+    (break)
+    (continue)
+
+Variables:
+    (var name value)
+    (set name value)
+
+Functions:
+    (def name (args) (body))
+    (call name args)
+    (return value)
+
+Evaluate:
+    (do (list 1)
+        (list 2)
+        (list 3) // Return last evaluated value
+    )
+    </pre>
+    <div>
+        Sample programs
+    </div>
+    <pre>
+(def add (a b) (+ a b))
+(call add 5 10)
+</pre>
+    <pre>
+(def fib (n) (do
+    (var r 0)
+    (loop (gt n 0) (do
+        (set r (+ r n))
+        (set n (- n 1))
+    ))
+    (return r)
+))
+(call fib 5)
+</pre>
+    <pre>
+(var a 1)
+(var b 5)
+(var c 10)
+(loop (lt a b)
+    (do
+        (set a (+ a 1))
+        (if (eq a 3) (break))
+        (set c (+ c 1))
+    )
+)
+(+ a c)
+</pre>
+    <pre>
+(var a 1)
+(var b (+ a 1))
+(do
+    (var a (+ b 5))
+    (set b (+ a 10))
+)
+(* a b)
+</pre>
+</div>
+</body>
+
+<body>
+<script type="module">
+    import init, {compile} from "./pkg/s.js";
+
+    init().then(() => {
+        const button = document.getElementById("compile");
+        const textArea = document.getElementById("code-area");
+        button.addEventListener("click", () => {
+            const text = textArea.value;
+            const result = compile(text);
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = result;
+        });
+    }).catch(console.error);
+</script>
+</body>
+
+</html>
